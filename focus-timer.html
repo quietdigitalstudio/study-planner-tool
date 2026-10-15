@@ -1,0 +1,451 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A free online focus timer for study sessions, short breaks and better revision habits.">
+  <title>Focus Timer | Quiet Digital Studio</title>
+  <style>
+    :root {
+      --purple: #655078;
+      --purple-light: #eee8f4;
+      --background: #fcfbfd;
+      --text: #34303b;
+      --muted: #716c78;
+      --white: #ffffff;
+      --border: #e8e1ee;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      text-align: center;
+      padding: 28px 16px;
+      background: var(--purple-light);
+    }
+
+    header p {
+      margin: 5px 0;
+      color: var(--muted);
+    }
+
+    a { color: var(--purple); }
+
+    main {
+      width: min(100% - 32px, 620px);
+      margin: 32px auto;
+    }
+
+    .timer-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: 0 8px 28px rgba(60, 40, 80, 0.06);
+    }
+
+    .modes {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      transition: opacity 0.15s ease;
+    }
+
+    button:hover { opacity: 0.86; }
+    button:focus-visible, a:focus-visible {
+      outline: 3px solid #b7a0d0;
+      outline-offset: 3px;
+    }
+
+    .mode-button {
+      background: #f2eff5;
+      color: var(--purple);
+    }
+
+    .mode-button.active {
+      background: var(--purple);
+      color: white;
+    }
+
+    .timer-ring {
+      --progress: 0%;
+      width: min(70vw, 260px);
+      aspect-ratio: 1;
+      margin: 28px auto;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--purple) var(--progress),
+        var(--purple-light) var(--progress)
+      );
+      display: grid;
+      place-items: center;
+    }
+
+    .timer-inner {
+      width: 86%;
+      height: 86%;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #time {
+      font-size: clamp(2.7rem, 12vw, 4rem);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -2px;
+    }
+
+    #mode-label {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .primary {
+      background: var(--purple);
+      color: white;
+      min-width: 130px;
+    }
+
+    .secondary {
+      background: #f2eff5;
+      color: var(--purple);
+    }
+
+    .sessions {
+      margin-top: 24px;
+      padding: 15px;
+      background: var(--purple-light);
+      border-radius: 12px;
+    }
+
+    #session-count {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--purple);
+    }
+
+    .info-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    h1, h2 { color: var(--purple); }
+    h1 { margin-bottom: 4px; }
+    h2 { font-size: 1.2rem; }
+    .muted { color: var(--muted); font-size: 0.94rem; }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px;
+      background: var(--purple-light);
+      margin-top: 40px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <p>QUIET DIGITAL STUDIO</p>
+  <h1>Focus Timer</h1>
+  <p>A little focus, one session at a time.</p>
+  <p><a href="index.html">← Back to the Study Planner</a></p>
+</header>
+
+<main>
+  <section class="timer-card" aria-label="Study focus timer">
+    <div class="modes" aria-label="Choose timer mode">
+      <button class="mode-button active" id="focus-mode" aria-pressed="true">
+        Focus · 25 min
+      </button>
+      <button class="mode-button" id="break-mode" aria-pressed="false">
+        Short break · 5 min
+      </button>
+    </div>
+
+    <div class="timer-ring" id="timer-ring" role="img"
+         aria-label="Timer progress">
+      <div class="timer-inner">
+        <div id="time" role="timer" aria-label="25 minutes remaining">
+          25:00
+        </div>
+        <div id="mode-label">Ready to focus?</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="primary" id="start-pause">Start focus</button>
+      <button class="secondary" id="reset">Reset</button>
+    </div>
+
+    <div class="sessions">
+      <div>Completed focus sessions</div>
+      <div id="session-count" aria-live="polite">0</div>
+      <div class="muted">Counted during this visit</div>
+    </div>
+
+    <p id="message" role="status" aria-live="polite">
+      Choose a session and press Start when you're ready.
+    </p>
+  </section>
+
+  <section class="info-card">
+    <h2>How to use your focus timer</h2>
+    <ol>
+      <li>Choose a topic or task to work on.</li>
+      <li>Start a 25-minute focus session.</li>
+      <li>Keep distractions away and work on one task.</li>
+      <li>When the timer ends, take a short break.</li>
+      <li>Repeat when you feel ready.</li>
+    </ol>
+    <p class="muted">
+      These durations are a starting point. Adjust your study routine
+      to suit your needs, and take breaks whenever you need them.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p><strong>Quiet Digital Studio</strong></p>
+  <p>
+    <a href="index.html">Home</a> ·
+    <a href="exam-study-guide.html">Exam Study Guide</a> ·
+    <a href="privacy.html">Privacy Policy</a>
+  </p>
+  <p class="muted">Contact: quietdigitstudio@gmail.com</p>
+</footer>
+
+<script>
+  (() => {
+    const FOCUS_SECONDS = 25 * 60;
+    const BREAK_SECONDS = 5 * 60;
+
+    const timeDisplay = document.getElementById("time");
+    const modeLabel = document.getElementById("mode-label");
+    const ring = document.getElementById("timer-ring");
+    const startPauseButton = document.getElementById("start-pause");
+    const resetButton = document.getElementById("reset");
+    const focusButton = document.getElementById("focus-mode");
+    const breakButton = document.getElementById("break-mode");
+    const sessionCountDisplay = document.getElementById("session-count");
+    const message = document.getElementById("message");
+
+    let mode = "focus";
+    let remaining = FOCUS_SECONDS;
+    let running = false;
+    let deadline = 0;
+    let intervalId = null;
+    let completedSessions = 0;
+
+    function duration() {
+      return mode === "focus" ? FOCUS_SECONDS : BREAK_SECONDS;
+    }
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return String(mins).padStart(2, "0") + ":" +
+             String(secs).padStart(2, "0");
+    }
+
+    function render() {
+      timeDisplay.textContent = formatTime(remaining);
+      timeDisplay.setAttribute(
+        "aria-label",
+        formatTime(remaining) + " remaining"
+      );
+
+      const progress = 100 * (1 - remaining / duration());
+      ring.style.setProperty("--progress", progress + "%");
+      ring.setAttribute(
+        "aria-label",
+        Math.round(progress) + "% of this session completed"
+      );
+
+      modeLabel.textContent = mode === "focus"
+        ? (running ? "Stay focused" : "Focus session")
+        : (running ? "Enjoy your break" : "Short break");
+
+      focusButton.classList.toggle("active", mode === "focus");
+      breakButton.classList.toggle("active", mode === "break");
+      focusButton.setAttribute("aria-pressed", String(mode === "focus"));
+      breakButton.setAttribute("aria-pressed", String(mode === "break"));
+
+      startPauseButton.textContent = running
+        ? "Pause"
+        : (remaining === 0 ? "Start again" :
+           (remaining === duration() ? "Start " +
+             (mode === "focus" ? "focus" : "break") : "Resume"));
+    }
+
+    function stopInterval() {
+      if (intervalId !== null) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    }
+
+    function tick() {
+      remaining = Math.max(
+        0,
+        Math.ceil((deadline - Date.now()) / 1000)
+      );
+
+      if (remaining === 0) {
+        running = false;
+        stopInterval();
+
+        if (mode === "focus") {
+          completedSessions++;
+          sessionCountDisplay.textContent = completedSessions;
+          message.textContent =
+            "Focus session complete! Take a break if you need one.";
+        } else {
+          message.textContent =
+            "Break complete! Start another focus session when you're ready.";
+        }
+
+        render();
+        return;
+      }
+
+      render();
+    }
+
+    function start() {
+      if (running) return;
+
+      if (remaining === 0) {
+        remaining = duration();
+      }
+
+      running = true;
+      deadline = Date.now() + remaining * 1000;
+      message.textContent = mode === "focus"
+        ? "Your focus session is running."
+        : "Your break is running.";
+
+      stopInterval();
+      intervalId = setInterval(tick, 250);
+      render();
+    }
+
+    function pause() {
+      if (!running) return;
+
+      remaining = Math.max(
+        0,
+        Math.ceil((deadline - Date.now()) / 1000)
+      );
+      running = false;
+      stopInterval();
+      message.textContent = "Timer paused. Resume whenever you're ready.";
+      render();
+    }
+
+    function reset() {
+      running = false;
+      stopInterval();
+      remaining = duration();
+      message.textContent = "Timer reset. Start whenever you're ready.";
+      render();
+    }
+
+    function chooseMode(newMode) {
+      running = false;
+      stopInterval();
+      mode = newMode;
+      remaining = duration();
+      message.textContent = mode === "focus"
+        ? "Ready for a focus session?"
+        : "Ready for a short break?";
+      render();
+    }
+
+    startPauseButton.addEventListener("click", () => {
+      if (running) pause();
+      else start();
+    });
+
+    resetButton.addEventListener("click", reset);
+    focusButton.addEventListener("click", () => chooseMode("focus"));
+    breakButton.addEventListener("click", () => chooseMode("break"));
+
+    render();
+  })();
+</script>
+
+</body>
+</html>
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  color: #51465f;
+  background:
+    radial-gradient(
+      circle at 12% 15%,
+      rgba(218, 207, 244, 0.75),
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at 88% 80%,
+      rgba(207, 225, 211, 0.65),
+      transparent 35%
+    ),
+    linear-gradient(135deg, #faf8ff, #f3f0fa, #f7f8f1);
+}
+
+.timer-card {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 28px;
+  box-shadow: 0 18px 50px rgba(91, 73, 117, 0.09);
+  padding: 32px;
+}
+
+button {
+  transition: background-color 0.2s ease;
+  border-radius: 14px;
+}
