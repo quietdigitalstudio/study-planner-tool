@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create a simple study plan based on your exam date, available study time and revision topics.">
+  <title>Study Planner | Free Revision Calculator</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #253047;
+      line-height: 1.6;
+    }
+    header {
+      background: #ffffff;
+      padding: 22px 16px;
+      text-align: center;
+      border-bottom: 1px solid #e4e8f0;
+    }
+    header h1 { margin: 0; color: #465db5; }
+    header p { margin: 5px 0 0; color: #657087; }
+    main { max-width: 720px; margin: 32px auto; padding: 0 16px; }
+    .card {
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 18px rgba(30, 45, 80, 0.06);
+    }
+    h2 { margin-top: 0; }
+    label { display: block; margin: 16px 0 6px; font-weight: bold; }
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccd3e0;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 13px;
+      border: 0;
+      border-radius: 9px;
+      background: #465db5;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover { background: #354992; }
+    #result {
+      margin-top: 20px;
+      padding: 16px;
+      background: #eef1ff;
+      border-radius: 10px;
+      display: none;
+    }
+    .note { color: #657087; font-size: 14px; }
+    footer { text-align: center; padding: 24px; color: #657087; }
+    a { color: #465db5; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Study Planner</h1>
+    <p>A simple tool to organise your revision.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Create your study plan</h2>
+      <p>Enter your available time to calculate a manageable revision schedule.</p>
+
+      <form id="planner">
+        <label for="days">Days until your exam</label>
+        <input id="days" type="number" min="1" max="365" value="14" required>
+
+        <label for="topics">Number of topics to revise</label>
+        <input id="topics" type="number" min="1" max="500" value="10" required>
+
+        <label for="hours">Study hours available per day</label>
+        <input id="hours" type="number" min="0.5" max="16" step="0.5" value="2" required>
+
+        <button type="submit">Calculate my study plan</button>
+      </form>
+
+      <div id="result" aria-live="polite"></div>
+      <p class="note">This is a suggested schedule. Adjust it to suit your needs and remember to take breaks.</p>
+    </section>
+
+    <section class="card">
+      <h2>How to use your plan</h2>
+      <p>1. List the topics you need to revise.</p>
+      <p>2. Start with the topics you find most difficult.</p>
+      <p>3. Practise questions and review your mistakes.</p>
+      <p>4. Leave time to review everything before your exam.</p>
+    </section>
+
+    <section class="card">
+      <h2>About this tool</h2>
+      <p>This free calculator helps students estimate their available revision time and divide topics into manageable sessions. It is a planning aid, not a guarantee of exam results.</p>
+    </section>
+
+    <section class="card">
+      <h2>Privacy</h2>
+      <p>This calculator processes your entries in your browser. It does not send them to a server or save them.</p>
+      <p><a href="privacy.html">Read our privacy information</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Free Study Planner</p>
+    <p><a href="mailto:contact@example.com">Contact</a></p>
+  </footer>
+
+  <script>
+    document.getElementById("planner").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const days = Number(document.getElementById("days").value);
+      const topics = Number(document.getElementById("topics").value);
+      const hours = Number(document.getElementById("hours").value);
+      const result = document.getElementById("result");
+
+      if (days < 1 || topics < 1 || hours <= 0 ||
+          !Number.isFinite(days) || !Number.isFinite(topics) ||
+          !Number.isFinite(hours)) {
+        result.style.display = "block";
+        result.textContent = "Please enter valid numbers in all fields.";
+        return;
+      }
+
+      const topicsPerDay = topics / days;
+      const totalHours = days * hours;
+      const hoursPerTopic = totalHours / topics;
+
+      result.style.display = "block";
+      result.replaceChildren();
+
+      const heading = document.createElement("h3");
+      heading.textContent = "Your suggested revision plan";
+      result.appendChild(heading);
+
+      const lines = [
+        "Total available study time: " + totalHours.toFixed(1) + " hours",
+        "Average topics per day: " + topicsPerDay.toFixed(1),
+        "Available time per topic: " + hoursPerTopic.toFixed(1) + " hours"
+      ];
+
+      lines.forEach(function(line) {
+        const p = document.createElement("p");
+        p.textContent = line;
+        result.appendChild(p);
+      });
+
+      const advice = document.createElement("p");
+      advice.textContent = topics > days
+        ? "You have more topics than days. Try combining shorter topics and prioritising difficult ones."
+        : "You have at least one day per topic on average. Use some sessions for practice questions and review.";
+      result.appendChild(advice);
+    });
+  </script>
+</body>
+</html>
