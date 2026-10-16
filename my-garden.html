@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf8f5">
+  <meta name="description" content="Grow a beautiful little study garden with every completed focus session. A peaceful space by Quiet Digital Studio.">
+  <title>My Garden | Quiet Digital Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #373441;
+      --muted: #837d8b;
+      --purple: #7f699b;
+      --deep-purple: #66537d;
+      --sage: #678d79;
+      --line: #ebe6ed;
+      --paper: #fffefa;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--sans);
+      background:
+        radial-gradient(ellipse at 5% 12%, #e9dcf5 0, transparent 28%),
+        radial-gradient(ellipse at 99% 35%, #e5f0e6 0, transparent 26%),
+        radial-gradient(ellipse at 40% 100%, #f8e8e2 0, transparent 30%),
+        #faf8f5;
+      min-height: 100vh;
+    }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible { outline: 3px solid #b49bce; outline-offset: 4px; }
+    .wrap { width: min(1120px, calc(100% - 38px)); margin-inline: auto; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 28px 0 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: -.03em; }
+    .brand-mark { display: grid; place-items: center; width: 43px; height: 43px; border: 1px solid #e0d6e8; border-radius: 15px; background: #f1eaf6; color: var(--deep-purple); font-size: 24px; }
+    nav { display: flex; gap: 25px; flex-wrap: wrap; justify-content: flex-end; }
+    nav a { font-size: 13px; color: #746d7d; font-weight: 700; }
+    nav a.active, nav a:hover { color: var(--deep-purple); }
+    .intro { text-align: center; max-width: 680px; margin: 35px auto 34px; }
+    .eyebrow { color: var(--purple); text-transform: uppercase; letter-spacing: .21em; font-size: 11px; font-weight: 700; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, .plant-title { font-family: var(--serif); }
+    h1 { margin: 13px 0 13px; font-size: clamp(43px, 7vw, 71px); font-weight: 600; line-height: 1.13; letter-spacing: -.05em; }
+    h1 em { color: var(--purple); font-weight: 500; }
+    .intro p { margin: auto; color: var(--muted); font-size: 15px; line-height: 1.9; }
+    .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px; }
+    .panel { background: rgba(255,255,255,.84); border: 1px solid rgba(255,255,255,.96); border-radius: 28px; box-shadow: 0 22px 60px rgba(78,56,95,.07); }
+    .featured { position: relative; overflow: hidden; min-height: 405px; background: linear-gradient(140deg, #f2ebf6, #fcf8fa 48%, #edf4ed); display: flex; align-items: center; justify-content: center; padding: 28px; }
+    .featured::before { content: ""; position: absolute; width: 370px; height: 370px; border: 1px solid rgba(164,140,183,.17); border-radius: 50%; }
+    .featured::after { content: ""; position: absolute; width: 290px; height: 290px; border: 1px solid rgba(164,140,183,.14); border-radius: 50%; }
+    .feature-tag { position: absolute; z-index: 2; top: 24px; left: 27px; font-size: 11px; text-transform: uppercase; letter-spacing: .13em; color: #877396; font-weight: 700; }
+    .feature-art { position: relative; z-index: 1; width: min(100%, 360px); }
+    .feature-art svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 15px 13px rgba(84, 66, 83, .09)); }
+    .feature-footer { position: absolute; bottom: 23px; left: 26px; right: 26px; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .soft-pill { background: rgba(255,255,255,.8); border: 1px solid rgba(255,255,255,.95); padding: 8px 13px; border-radius: 99px; color: #756585; font-size: 12px; font-weight: 700; }
+    .growth { padding: 32px; display: flex; flex-direction: column; justify-content: center; }
+    .tiny { font-size: 11px; text-transform: uppercase; letter-spacing: .16em; color: #8f829a; font-weight: 700; }
+    .growth h2 { font-size: clamp(29px, 3.5vw, 40px); font-weight: 500; margin: 13px 0 12px; line-height: 1.2; letter-spacing: -.035em; }
+    .growth > p { font-size: 14px; line-height: 1.8; color: var(--muted); margin-bottom: 25px; }
+    .progress-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; font-weight: 700; color: #796d81; }
+    .track { height: 9px; overflow: hidden; background: #eee9f0; border-radius: 20px; margin: 13px 0 9px; }
+    .fill { height: 100%; width: 0%; background: linear-gradient(90deg, #a994c1, #7f9f86); border-radius: 20px; transition: width .4s ease; }
+    .milestone { color: #968a9f; font-size: 12px; margin: 0 0 24px; }
+    .cta { display: inline-flex; justify-content: center; align-items: center; gap: 9px; align-self: flex-start; color: white; font-weight: 700; font-size: 13px; border-radius: 14px; background: var(--purple); padding: 15px 22px; transition: transform .2s, background .2s; }
+    .cta:hover { transform: translateY(-2px); background: var(--deep-purple); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 22px; }
+    .stat { border-radius: 20px; border: 1px solid #eee8ef; background: rgba(255,255,255,.7); padding: 19px 21px; }
+    .stat-value { color: var(--deep-purple); font-family: var(--serif); font-size: 31px; line-height: 1.2; font-weight: 600; }
+    .stat-name { color: var(--muted); font-size: 12px; margin-top: 7px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin: 65px 0 23px; }
+    .section-heading h2 { margin: 7px 0 0; font-size: 34px; font-weight: 500; letter-spacing: -.03em; }
+    .section-heading p { margin-bottom: 0; color: var(--muted); font-size: 13px; }
+    .garden-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .plant-card { padding: 18px; border-radius: 24px; background: rgba(255,255,255,.82); border: 1px solid rgba(255,255,255,.94); box-shadow: 0 13px 37px rgba(76,54,93,.05); }
+    .plant-visual { height: 210px; display: grid; place-items: center; border-radius: 18px; overflow: hidden; background: linear-gradient(155deg,#f4eef8,#f3f8f2); }
+    .plant-visual svg { display: block; height: 194px; width: min(100%, 210px); }
+    .card-line { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-top: 16px; }
+    .plant-title { font-weight: 600; font-size: 22px; }
+    .plant-state { color: #758c7c; font-size: 11px; font-weight: 700; }
+    .plant-description { font-size: 12px; color: var(--muted); margin: 5px 0 0; }
+    .achievements { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 13px; }
+    .achievement { background: rgba(255,255,255,.8); border-radius: 19px; text-align: center; padding: 21px 10px; border: 1px solid rgba(255,255,255,.95); }
+    .achievement.locked { opacity: .52; filter: grayscale(.65); }
+    .medal { width: 52px; height: 52px; display: grid; place-items: center; background: #f0eaf5; border-radius: 17px; margin: 0 auto 12px; font-size: 25px; }
+    .achievement strong { display: block; font-size: 12px; }
+    .achievement span { display: block; margin-top: 7px; color: var(--muted); font-size: 11px; }
+    .gentle-note { color: var(--muted); font-size: 13px; line-height: 1.8; margin: 22px 0 0; }
+    .actions { margin: 23px 0 0; text-align: center; }
+    .refresh { border: 1px solid #e7dfea; background: rgba(255,255,255,.85); color: #726080; font-weight: 700; font-size: 12px; border-radius: 12px; padding: 10px 17px; }
+    .refresh:hover { background: white; }
+    footer { text-align: center; color: #99909e; font-size: 12px; padding: 60px 20px 35px; line-height: 2; }
+    footer a { color: #756484; font-weight: 700; }
+    @media (max-width: 850px) { .hero { grid-template-columns: 1fr; } .featured { min-height: 350px; } .garden-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .achievements { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+    @media (max-width: 550px) { .wrap { width: min(100% - 28px,1120px); } .topbar { align-items: flex-start; } .brand { font-size: 12px; } .brand-mark { width: 35px; height: 35px; font-size: 19px; } nav { gap: 11px; max-width: 158px; } nav a { font-size: 11px; } .intro { margin: 22px auto 30px; } .featured { min-height: 315px; } .feature-art { width: 270px; } .growth { padding: 26px; } .stats { gap: 9px; } .stat { padding: 15px 12px; } .stat-value { font-size: 25px; } .stat-name { font-size: 11px; } .garden-grid { grid-template-columns: 1fr; } .achievements { grid-template-columns: repeat(2, minmax(0,1fr)); } .section-heading { margin-top: 48px; } .section-heading h2 { font-size: 30px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">✿</span> Quiet Digital Studio</a>
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="focus-timer.html">Focus Timer</a>
+        <a class="active" href="my-garden.html" aria-current="page">My Garden</a>
+      </nav>
+    </header>
+    <section class="intro">
+      <span class="eyebrow">Your personal growth space</span>
+      <h1>Let your efforts <em>bloom.</em></h1>
+      <p>Every focused moment is a little seed. Complete your sessions, grow beautiful plants, and create a garden that tells the story of your progress.</p>
+    </section>
+    <main>
+      <div class="hero">
+        <section class="featured panel" aria-label="Your current plant">
+          <span class="feature-tag">Currently growing</span>
+          <div class="feature-art" id="featured-art" aria-hidden="true"></div>
+          <div class="feature-footer"><span class="soft-pill" id="featured-name">Lavender</span><span class="soft-pill" id="featured-stage">Seed</span></div>
+        </section>
+        <section class="growth panel">
+          <span class="tiny">One session at a time</span>
+          <h2 id="growth-heading">A little seed of potential</h2>
+          <p id="growth-message">Your first plant is ready to grow. Finish a 25-minute focus session to see its first sprout.</p>
+          <div class="progress-head"><span>Plant growth</span><span id="progress-number">0 of 4 sessions</span></div>
+          <div class="track" role="progressbar" aria-label="Current plant growth" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" id="progress-track"><div class="fill" id="progress-fill"></div></div>
+          <p class="milestone" id="progress-hint">4 completed sessions to bloom</p>
+          <a class="cta" href="focus-timer.html">✦ Start a focus session <span aria-hidden="true">→</span></a>
+        </section>
+      </div>
+      <section class="stats" aria-label="Garden statistics">
+        <div class="stat"><div class="stat-value" id="total-sessions">0</div><div class="stat-name">Focus sessions finished</div></div>
+        <div class="stat"><div class="stat-value" id="total-hours">0h 0m</div><div class="stat-name">Time focused</div></div>
+        <div class="stat"><div class="stat-value" id="blooms-count">0</div><div class="stat-name">Plants in bloom</div></div>
+      </section>
+      <section id="collection" aria-labelledby="collection-title">
+        <div class="section-heading"><div><span class="tiny">Your growing collection</span><h2 id="collection-title">The little garden</h2></div><p>Each flower takes 4 completed focus sessions to bloom.</p></div>
+        <div class="garden-grid" id="garden-grid"></div>
+      </section>
+      <section id="achievements" aria-labelledby="achievements-title">
+        <div class="section-heading"><div><span class="tiny">Tiny moments worth celebrating</span><h2 id="achievements-title">Milestones</h2></div><p>Unlocked as you keep showing up.</p></div>
+        <div class="achievements" id="achievements-grid"></div>
+      </section>
+      <div class="actions"><button class="refresh" type="button" id="refresh-button">↻ Refresh my garden</button></div>
+      <p class="gentle-note">Your garden is saved on this device and browser. Your daily Focus Timer plant starts fresh each day, while this garden keeps your completed sessions over time. Clearing browser storage or switching devices can remove this local progress. Only sessions completed after connecting the timer to My Garden are counted here.</p>
+    </main>
+    <footer>Made with care by Quiet Digital Studio · <a href="index.html">Home</a> · <a href="focus-timer.html">Focus Timer</a> · <a href="privacy.html">Privacy Policy</a><br>Grow at your own pace. 🌿</footer>
+  </div>
+  <script>
+    (() => {
+      "use strict";
+      const KEY = "qds-garden-v1";
+      const SESSIONS_PER_PLANT = 4;
+      const flowers = [
+        { name: "Lavender", color: "#ac91c4", text: "A quiet beginning, full of possibility." },
+        { name: "Daisy", color: "#f4d9b8", text: "A bright reminder to keep going." },
+        { name: "Rose", color: "#dca2b6", text: "Growing with care and patience." },
+        { name: "Bluebell", color: "#92aad5", text: "Small steps can make beautiful things." },
+        { name: "Sunflower", color: "#e9c47b", text: "A little sunshine for your hard work." },
+        { name: "Jasmine", color: "#dfd8ed", text: "A gentle reward for your consistency." }
+      ];
+      const milestones = [
+        { amount: 1, icon: "🌱", title: "First Step", detail: "Complete 1 session" },
+        { amount: 4, icon: "🌼", title: "First Bloom", detail: "Complete 4 sessions" },
+        { amount: 12, icon: "🌷", title: "Garden Keeper", detail: "Complete 12 sessions" },
+        { amount: 24, icon: "🌿", title: "Steady Roots", detail: "Complete 24 sessions" },
+        { amount: 40, icon: "✨", title: "In Full Bloom", detail: "Complete 40 sessions" }
+      ];
+      const $ = id => document.getElementById(id);
+      const safeNumber = value => Number.isFinite(Number(value)) ? Math.max(0, Math.floor(Number(value))) : 0;
+      const getTotal = () => {
+        try { return safeNumber(JSON.parse(localStorage.getItem(KEY) || "{}").totalSessions); }
+        catch { return 0; }
+      };
+      const stageName = steps => ["Seed", "Little sprout", "Growing", "Almost blooming", "In bloom"][steps];
+      const flowerFor = index => flowers[index % flowers.length];
+
+      function artwork(stage, color, id) {
+        const stemHeight = [0, 32, 76, 112, 132][stage];
+        const top = 169 - stemHeight;
+        const seed = stage === 0 ? '<ellipse cx="120" cy="146" rx="7" ry="4" fill="#82694f"/>' : '';
+        const stem = stage ? `<path d="M120 163 Q116 ${top + 65} 120 ${top}" stroke="#6e9876" stroke-width="7" fill="none" stroke-linecap="round"/>` : '';
+        const leaves = stage >= 1 ? `<path d="M119 143 Q86 108 78 135 Q86 155 119 149" fill="#91b69a"/> <path d="M121 137 Q149 98 162 122 Q156 148 122 142" fill="#7fa788"/>` : '';
+        const moreLeaves = stage >= 2 ? `<path d="M118 106 Q83 77 75 102 Q86 120 118 112" fill="#acc6a6"/><path d="M121 91 Q149 63 159 88 Q153 110 121 99" fill="#719e80"/>` : '';
+        const bud = stage === 3 ? `<ellipse cx="120" cy="${top + 5}" rx="14" ry="20" fill="${color}"/><path d="M109 ${top + 15} Q120 ${top + 23} 132 ${top + 15}" fill="none" stroke="#9bbca2" stroke-width="5"/>` : '';
+        const petals = stage === 4 ? Array.from({ length: 8 }, (_, i) => `<ellipse cx="120" cy="${top - 17}" rx="12" ry="23" fill="${color}" opacity=".96" transform="rotate(${i * 45} 120 ${top})"/>`).join("") + `<circle cx="120" cy="${top}" r="12" fill="#f5d68e"/>` : '';
+        return `<svg viewBox="0 0 240 235" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a ${stageName(stage).toLowerCase()} plant"><defs><linearGradient id="pot-${id}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e2bca7"/><stop offset="1" stop-color="#b98b76"/></linearGradient></defs><ellipse cx="120" cy="208" rx="73" ry="12" fill="#8f998c" opacity=".15"/>${stem}${leaves}${moreLeaves}${seed}${bud}${petals}<path d="M80 157 H160 L151 206 Q120 220 89 206 Z" fill="url(#pot-${id})"/><rect x="74" y="153" width="92" height="18" rx="8" fill="#d6a891"/><ellipse cx="120" cy="154" rx="40" ry="5" fill="#8e6e5d"/></svg>`;
+      }
+      function render() {
+        const total = getTotal();
+        const completed = Math.floor(total / SESSIONS_PER_PLANT);
+        const currentIndex = completed;
+        const currentSteps = total % SESSIONS_PER_PLANT;
+        const currentFlower = flowerFor(currentIndex);
+        $("total-sessions").textContent = total.toLocaleString();
+        const minutes = total * 25;
+        $("total-hours").textContent = `${Math.floor(minutes / 60)}h ${minutes % 60}m`;
+        $("blooms-count").textContent = completed.toLocaleString();
+        $("featured-art").innerHTML = artwork(currentSteps, currentFlower.color, "feature");
+        $("featured-name").textContent = currentFlower.name;
+        $("featured-stage").textContent = stageName(currentSteps);
+        $("progress-number").textContent = `${currentSteps} of ${SESSIONS_PER_PLANT} sessions`;
+        $("progress-fill").style.width = `${currentSteps / SESSIONS_PER_PLANT * 100}%`;
+        $("progress-track").setAttribute("aria-valuenow", currentSteps);
+        $("progress-hint").textContent = `${SESSIONS_PER_PLANT - currentSteps} more completed ${SESSIONS_PER_PLANT - currentSteps === 1 ? "session" : "sessions"} until your next bloom`;
+        const headings = ["A little seed of potential", "Look, a little sprout!", "Your efforts are taking root", "Almost ready to bloom"];
+        const messages = ["Your next plant is ready. Complete a 25-minute focus session to see it sprout.", "One small session made a difference. Keep your momentum gently growing.", "Every little effort is adding up. Your plant is growing stronger.", "Just one more completed session and a beautiful new flower will bloom!"];
+        $("growth-heading").textContent = headings[currentSteps];
+        $("growth-message").textContent = messages[currentSteps];
+        const cards = [];
+        for (let i = 0; i <= currentIndex; i++) {
+          const plant = flowerFor(i);
+          const stage = i < completed ? 4 : currentSteps;
+          const state = stage === 4 ? "✓ Bloomed" : stageName(stage);
+          cards.push(`<article class="plant-card"><div class="plant-visual">${artwork(stage, plant.color, "card-" + i)}</div><div class="card-line"><span class="plant-title">${plant.name}</span><span class="plant-state">${state}</span></div><p class="plant-description">${plant.text}</p></article>`);
+        }
+        $("garden-grid").innerHTML = cards.join("");
+        $("achievements-grid").innerHTML = milestones.map(m => {
+          const unlocked = total >= m.amount;
+          return `<div class="achievement ${unlocked ? "" : "locked"}" aria-label="${m.title}: ${unlocked ? "unlocked" : "locked"}"><div class="medal" aria-hidden="true">${unlocked ? m.icon : "🔒"}</div><strong>${m.title}</strong><span>${unlocked ? "Unlocked!" : m.detail}</span></div>`;
+        }).join("");
+      }
+      $("refresh-button").addEventListener("click", render);
+      window.addEventListener("storage", render);
+      document.addEventListener("visibilitychange", () => { if (!document.hidden) render(); });
+      render();
+    })();
+  </script>
+</body>
+</html>
