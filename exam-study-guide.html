@@ -66,8 +66,36 @@
       th, td { padding: 7px; font-size: .9rem; }
     }
   </style>
+<style>
+/* Shared Quiet Digital Studio navigation */
+.qds-shell{box-sizing:border-box;width:min(1120px,calc(100% - 36px));max-width:none;margin:0 auto 18px;padding:24px 0 18px;border-bottom:1px solid #e5dce9;font:14px/1.5 "Segoe UI",sans-serif;text-align:left;color:#373441}
+.qds-shell .qds-home{display:inline-flex;align-items:center;gap:10px;color:#554461;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:-.02em}
+.qds-shell .qds-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;border:1px solid #e0d6e8;background:#eee5f4;font-size:24px;color:#7f699b}
+.qds-shell .qds-tag{color:#827489;font-size:11px;letter-spacing:.09em;margin-left:auto}
+.qds-shell .qds-top{display:flex;align-items:center;gap:15px;margin-bottom:17px}
+.qds-shell .qds-links{display:flex;gap:7px;flex-wrap:wrap}
+.qds-shell .qds-links a{display:inline-flex;align-items:center;justify-content:center;min-height:39px;padding:8px 13px;color:#6e6178;border:1px solid transparent;border-radius:11px;text-decoration:none;font:600 12px/1.4 "Segoe UI",sans-serif;letter-spacing:0;background:transparent}
+.qds-shell .qds-links a:hover{background:#f0e8f6;border-color:#e5d9ed;color:#66537d}
+.qds-shell .qds-links a[aria-current="page"]{background:#7f699b;border-color:#7f699b;color:white;box-shadow:0 4px 12px #7f699b18}
+.qds-shell a:focus-visible{outline:3px solid #b49bce;outline-offset:3px}
+@media(max-width:620px){.qds-shell{padding-top:18px;margin-bottom:10px}.qds-shell .qds-tag{display:none}.qds-shell .qds-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.qds-shell .qds-links a{font-size:11px;padding:8px 5px;background:#ffffff80;border-color:#eee7f0}.qds-shell .qds-top{margin-bottom:12px}}
+@media print{.qds-shell{display:none}}
+
+/* Bring the original page into the studio palette. */
+body{background:radial-gradient(ellipse at 0 10%,#e9dcf5,transparent 38%),radial-gradient(ellipse at 100% 60%,#e5f0e6,transparent 38%),#faf8f5;color:#373441;font-family:"Segoe UI",sans-serif}
+body>header{background:transparent;border:0;padding:26px 20px 12px;text-align:center}
+body>header h1{color:#66537d;font-family:Georgia,serif;font-weight:400;font-size:clamp(34px,5vw,54px);letter-spacing:-.035em;line-height:1.15}
+body>header p{color:#716978}
+h2,h3{color:#554461;font-family:Georgia,serif;font-weight:400}
+main .card,main section{border-radius:22px;border:1px solid #fff;box-shadow:0 14px 40px #4e385f08}
+input{border-color:#e2d7e8;border-radius:11px}input:focus-visible,button:focus-visible{outline:3px solid #b49bce;outline-offset:3px}
+button,.button{background:#7f699b;color:#fff;border-radius:11px}button:hover,.button:hover{background:#66537d}
+a{color:#66537d}#result{background:#f0eaf5}.note,footer{color:#716978}
+</style>
 </head>
 <body>
+<div class="qds-shell" role="banner"><div class="qds-top"><a class="qds-home" href="study-dashboard.html"><span class="qds-mark" aria-hidden="true">✧</span>Quiet Digital Studio</a><span class="qds-tag">A little focus. A little growth.</span></div><nav class="qds-links" aria-label="All study tools"><a href="study-dashboard.html">Dashboard</a><a href="index.html">Study Planner</a><a href="focus-timer.html">Focus Timer</a><a href="flashcards.html">Flashcards & Quiz</a><a href="grade-calculator.html">Grade Calculator</a><a href="revision-streak.html">Revision Streak</a><a href="my-garden.html">My Garden</a><a href="exam-study-guide.html" aria-current="page">Exam Guide</a></nav></div>
+
 
 <header>
   <p>QUIET DIGITAL STUDIO · STUDENT RESOURCE</p>
