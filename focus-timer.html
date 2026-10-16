@@ -180,7 +180,55 @@
         animation: none !important;
       }
     }
-  </style>
+
+    /* Peaceful lavender and sage design */
+    body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      color: #51465f;
+      background:
+        radial-gradient(
+          circle at 12% 15%,
+          rgba(218, 207, 244, 0.75),
+          transparent 36%
+        ),
+        radial-gradient(
+          circle at 88% 80%,
+          rgba(207, 225, 211, 0.65),
+          transparent 35%
+        ),
+        linear-gradient(135deg, #faf8ff, #f3f0fa, #f7f8f1);
+    }
+
+    header,
+    footer {
+      background: transparent;
+    }
+
+    .timer-card {
+      background: rgba(255, 255, 255, 0.76);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 28px;
+      box-shadow: 0 18px 50px rgba(91, 73, 117, 0.09);
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 30px rgba(91, 73, 117, 0.05);
+    }
+
+    .sessions {
+      background: #f0edf6;
+    }
+
+    button {
+      border-radius: 14px;
+    }
+ </style>
 </head>
 <body>
 
@@ -415,37 +463,4 @@
 </script>
 
 </body>
-</html>
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-  color: #51465f;
-  background:
-    radial-gradient(
-      circle at 12% 15%,
-      rgba(218, 207, 244, 0.75),
-      transparent 36%
-    ),
-    radial-gradient(
-      circle at 88% 80%,
-      rgba(207, 225, 211, 0.65),
-      transparent 35%
-    ),
-    linear-gradient(135deg, #faf8ff, #f3f0fa, #f7f8f1);
-}
-
-.timer-card {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  border-radius: 28px;
-  box-shadow: 0 18px 50px rgba(91, 73, 117, 0.09);
-  padding: 32px;
-}
-
-button {
-  transition: background-color 0.2s ease;
-  border-radius: 14px;
-}
+</html> 
