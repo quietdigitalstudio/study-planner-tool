@@ -963,19 +963,45 @@
         renderTimer();
       }
 
-      function handleSessionComplete() {
-        if (currentMode === "focus") {
-          appData.sessionsToday += 1;
-          appData.minutesFocusedToday += 25;
-          saveData();
-          updateStats();
-          messageEl.textContent = "Focus session complete. Your plant has grown 🌱";
-        } else {
-          messageEl.textContent = "Break complete. Return when you're ready.";
-        }
+      
+function handleSessionComplete() {
+  if (currentMode === "focus") {
+    appData.sessionsToday += 1;
+    appData.minutesFocusedToday += 25;
 
-        renderTimer();
-      }
+    // Update your permanent garden
+    try {
+      const gardenKey = "qds-garden-v1";
+      const garden = JSON.parse(
+        localStorage.getItem(gardenKey) || "{}"
+      );
+
+      garden.totalSessions =
+        (Number(garden.totalSessions) || 0) + 1;
+
+      garden.updatedAt = new Date().toISOString();
+
+      localStorage.setItem(
+        gardenKey,
+        JSON.stringify(garden)
+      );
+    } catch (error) {
+      console.warn("Garden progress could not be saved.");
+    }
+
+    saveData();
+    updateStats();
+
+    messageEl.textContent =
+      "Focus session complete. Your plant has grown 🌱";
+  } else {
+    messageEl.textContent =
+      "Break complete. Return when you're ready.";
+  }
+
+  renderTimer();
+}
+
 
       focusBtn.addEventListener("click", function () {
         chooseMode("focus");
