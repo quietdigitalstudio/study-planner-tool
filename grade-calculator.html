@@ -16,6 +16,18 @@
 .qds-shell a:focus-visible{outline:3px solid #b49bce;outline-offset:3px}
 @media(max-width:620px){.qds-shell{padding-top:18px;margin-bottom:10px}.qds-shell .qds-tag{display:none}.qds-shell .qds-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.qds-shell .qds-links a{font-size:11px;padding:8px 5px;background:#ffffff80;border-color:#eee7f0}.qds-shell .qds-top{margin-bottom:12px}}
 @media print{.qds-shell{display:none}}
+
+/* Keep navigation on one line */
+.qds-shell .qds-links {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.qds-shell .qds-links a {
+  flex-shrink: 0;
+}
 </style>
 </head><body>
 <div class="qds-shell" role="banner"><div class="qds-top"><a class="qds-home" href="study-dashboard.html"><span class="qds-mark" aria-hidden="true">✧</span>Quiet Digital Studio</a><span class="qds-tag">A little focus. A little growth.</span></div><nav class="qds-links" aria-label="All study tools"><a href="study-dashboard.html">Dashboard</a><a href="index.html">Study Planner</a><a href="focus-timer.html">Focus Timer</a><a href="flashcards.html">Flashcards & Quiz</a><a href="grade-calculator.html" aria-current="page">Grade Calculator</a><a href="revision-streak.html">Revision Streak</a><a href="my-garden.html">My Garden</a><a href="exam-study-guide.html">Exam Guide</a><a href="about.html">About &amp; Contact</a></nav></div>
