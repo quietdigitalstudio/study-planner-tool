@@ -1,466 +1,1015 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A free online focus timer for study sessions, short breaks and better revision habits.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A peaceful and professional focus timer with plant growth progress, built by Quiet Digital Studio." />
   <title>Focus Timer | Quiet Digital Studio</title>
   <style>
     :root {
-      --purple: #655078;
-      --purple-light: #eee8f4;
-      --background: #fcfbfd;
-      --text: #34303b;
-      --muted: #716c78;
-      --white: #ffffff;
-      --border: #e8e1ee;
+      --bg-1: #fbf8ff;
+      --bg-2: #f3f0fa;
+      --bg-3: #f5f8f1;
+      --lavender: #6c5a82;
+      --lavender-soft: #ece6f4;
+      --lavender-deep: #574767;
+      --sage: #9fb59d;
+      --sage-deep: #6f896f;
+      --cream: #fffdf8;
+      --white-glass: rgba(255, 255, 255, 0.72);
+      --border-soft: rgba(255, 255, 255, 0.9);
+      --text: #3d3845;
+      --muted: #70697b;
+      --shadow: 0 18px 50px rgba(84, 63, 111, 0.10);
+      --ring-bg: #ece6f2;
+      --success: #6f9f74;
+      --danger: #9d6771;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       margin: 0;
-      background: var(--background);
+      min-height: 100vh;
+      font-family: "Segoe UI", Arial, sans-serif;
       color: var(--text);
-      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 15%, rgba(223, 210, 244, 0.78), transparent 33%),
+        radial-gradient(circle at 88% 18%, rgba(213, 231, 216, 0.65), transparent 28%),
+        radial-gradient(circle at 82% 80%, rgba(241, 224, 234, 0.50), transparent 28%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
       line-height: 1.6;
     }
 
+    a {
+      color: var(--lavender-deep);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
     header {
+      padding: 34px 20px 18px;
       text-align: center;
-      padding: 28px 16px;
-      background: var(--purple-light);
     }
 
-    header p {
-      margin: 5px 0;
+    .eyebrow {
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      text-transform: uppercase;
       color: var(--muted);
+      margin-bottom: 8px;
     }
 
-    a { color: var(--purple); }
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--lavender-deep);
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      margin: 12px auto 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .top-link {
+      display: inline-block;
+      margin-top: 16px;
+      color: var(--lavender-deep);
+      font-weight: 600;
+    }
 
     main {
-      width: min(100% - 32px, 620px);
-      margin: 32px auto;
+      width: min(1120px, calc(100% - 28px));
+      margin: 10px auto 40px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      align-items: start;
     }
 
-    .timer-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 28px 20px;
-      text-align: center;
-      box-shadow: 0 8px 28px rgba(60, 40, 80, 0.06);
+    .card {
+      background: var(--white-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-soft);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .timer-panel {
+      padding: 24px;
+    }
+
+    .side-panel {
+      padding: 24px;
     }
 
     .modes {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
     button {
       font: inherit;
       cursor: pointer;
       border: 0;
-      border-radius: 10px;
-      padding: 11px 16px;
-      transition: opacity 0.15s ease;
+      transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.2s ease;
+      border-radius: 14px;
     }
 
-    button:hover { opacity: 0.86; }
-    button:focus-visible, a:focus-visible {
-      outline: 3px solid #b7a0d0;
+    button:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    a:focus-visible {
+      outline: 3px solid #bca5d5;
       outline-offset: 3px;
     }
 
     .mode-button {
-      background: #f2eff5;
-      color: var(--purple);
+      padding: 10px 16px;
+      background: rgba(255,255,255,0.65);
+      color: var(--lavender-deep);
+      border: 1px solid rgba(108, 90, 130, 0.10);
+      font-weight: 600;
     }
 
     .mode-button.active {
-      background: var(--purple);
-      color: white;
+      background: var(--lavender);
+      color: #fff;
+    }
+
+    .current-task {
+      margin: 10px 0 20px;
+    }
+
+    .current-task label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--lavender-deep);
+    }
+
+    .current-task input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(108, 90, 130, 0.13);
+      background: rgba(255,255,255,0.82);
+      font: inherit;
+      color: var(--text);
+    }
+
+    .timer-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .timer-area {
+      text-align: center;
+      padding: 12px 4px 6px;
     }
 
     .timer-ring {
       --progress: 0%;
-      width: min(70vw, 260px);
+      width: min(74vw, 320px);
       aspect-ratio: 1;
-      margin: 28px auto;
+      margin: 10px auto 18px;
       border-radius: 50%;
-      background: conic-gradient(
-        var(--purple) var(--progress),
-        var(--purple-light) var(--progress)
-      );
+      background:
+        conic-gradient(var(--lavender) var(--progress), var(--ring-bg) var(--progress));
       display: grid;
       place-items: center;
+      box-shadow: inset 0 4px 18px rgba(108,90,130,0.06);
     }
 
     .timer-inner {
-      width: 86%;
-      height: 86%;
-      background: white;
+      width: 84%;
+      height: 84%;
       border-radius: 50%;
+      background: rgba(255,255,255,0.94);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      box-shadow: inset 0 10px 30px rgba(108, 90, 130, 0.04);
+      padding: 16px;
     }
 
-    #time {
-      font-size: clamp(2.7rem, 12vw, 4rem);
+    .time {
+      font-size: clamp(3rem, 9vw, 4.8rem);
       font-weight: 700;
-      font-variant-numeric: tabular-nums;
       letter-spacing: -2px;
+      line-height: 1;
+      color: var(--lavender-deep);
+      font-variant-numeric: tabular-nums;
     }
 
-    #mode-label {
+    .mode-label {
+      margin-top: 12px;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .message {
+      min-height: 28px;
+      margin: 8px 0 14px;
+      color: var(--muted);
+      font-size: 0.97rem;
     }
 
     .controls {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .primary {
-      background: var(--purple);
+    .primary-btn,
+    .secondary-btn {
+      min-width: 132px;
+      padding: 12px 18px;
+      font-weight: 700;
+    }
+
+    .primary-btn {
+      background: var(--lavender);
       color: white;
-      min-width: 130px;
     }
 
-    .secondary {
-      background: #f2eff5;
-      color: var(--purple);
+    .secondary-btn {
+      background: rgba(255,255,255,0.76);
+      color: var(--lavender-deep);
+      border: 1px solid rgba(108, 90, 130, 0.12);
     }
 
-    .sessions {
-      margin-top: 24px;
-      padding: 15px;
-      background: var(--purple-light);
-      border-radius: 12px;
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 22px;
     }
 
-    #session-count {
+    .mini-stat {
+      background: rgba(255,255,255,0.62);
+      border: 1px solid rgba(255,255,255,0.86);
+      border-radius: 18px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .mini-stat .label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .mini-stat .value {
       font-size: 1.5rem;
-      font-weight: bold;
-      color: var(--purple);
+      font-weight: 700;
+      color: var(--lavender-deep);
     }
 
-    .info-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-      margin-top: 20px;
+    .plant-panel {
+      background: rgba(255,255,255,0.60);
+      border: 1px solid rgba(255,255,255,0.86);
+      border-radius: 24px;
+      padding: 18px;
+      text-align: center;
     }
 
-    h1, h2 { color: var(--purple); }
-    h1 { margin-bottom: 4px; }
-    h2 { font-size: 1.2rem; }
-    .muted { color: var(--muted); font-size: 0.94rem; }
+    .plant-title {
+      margin: 0 0 8px;
+      color: var(--lavender-deep);
+      font-size: 1.15rem;
+    }
+
+    .plant-subtitle {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .plant-scene {
+      position: relative;
+      width: 100%;
+      height: 290px;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 22px;
+      background:
+        linear-gradient(to top, rgba(239, 245, 236, 0.88), rgba(250, 247, 255, 0.92));
+    }
+
+    .ground {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 58px;
+      background: linear-gradient(to top, #d8e5d5, #edf4eb);
+    }
+
+    .pot {
+      position: absolute;
+      bottom: 44px;
+      width: 108px;
+      height: 72px;
+      background: linear-gradient(to bottom, #d6b29f, #bd9079);
+      border-radius: 0 0 22px 22px;
+      box-shadow: inset 0 -7px 0 rgba(128, 92, 72, 0.14);
+    }
+
+    .pot::before {
+      content: "";
+      position: absolute;
+      top: -12px;
+      left: -8px;
+      width: 124px;
+      height: 20px;
+      background: linear-gradient(to bottom, #dfbca8, #c99e89);
+      border-radius: 18px;
+    }
+
+    .soil {
+      position: absolute;
+      bottom: 106px;
+      width: 92px;
+      height: 16px;
+      background: #6f5547;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .stem {
+      position: absolute;
+      bottom: 114px;
+      width: 10px;
+      height: 18px;
+      background: linear-gradient(to top, #84a77f, #6f9a6f);
+      border-radius: 999px;
+      transform-origin: bottom center;
+      transition: height 0.5s ease;
+      z-index: 1;
+    }
+
+    .leaf {
+      position: absolute;
+      width: 34px;
+      height: 18px;
+      background: linear-gradient(to right, #a8c7a5, #78a07a);
+      border-radius: 100% 0 100% 0;
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      z-index: 1;
+    }
+
+    .leaf.left {
+      transform: rotate(-28deg) scale(0.9);
+      transform-origin: right center;
+    }
+
+    .leaf.right {
+      transform: rotate(28deg) scale(0.9);
+      transform-origin: left center;
+    }
+
+    .flower {
+      position: absolute;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      z-index: 3;
+      transform: scale(0.8);
+    }
+
+    .petal {
+      position: absolute;
+      width: 18px;
+      height: 24px;
+      background: #ead7f7;
+      border-radius: 50% 50% 50% 50%;
+      box-shadow: inset 0 -2px 0 rgba(255,255,255,0.35);
+    }
+
+    .petal:nth-child(1) { top: 0; left: 17px; }
+    .petal:nth-child(2) { top: 9px; right: 2px; transform: rotate(55deg); }
+    .petal:nth-child(3) { bottom: 1px; right: 7px; transform: rotate(125deg); }
+    .petal:nth-child(4) { bottom: 1px; left: 7px; transform: rotate(-125deg); }
+    .petal:nth-child(5) { top: 9px; left: 2px; transform: rotate(-55deg); }
+
+    .flower-center {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 20px;
+      height: 20px;
+      background: #f2d58d;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .plant-stage-text {
+      margin-top: 14px;
+      font-weight: 600;
+      color: var(--lavender-deep);
+    }
+
+    .tips-list {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .side-title {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--lavender-deep);
+      font-size: 1.28rem;
+    }
+
+    .side-text {
+      color: var(--muted);
+      margin-top: 0;
+      margin-bottom: 14px;
+    }
+
+    .calm-box {
+      background: rgba(255,255,255,0.64);
+      border: 1px solid rgba(255,255,255,0.86);
+      border-radius: 20px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .calm-box h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      color: var(--lavender-deep);
+    }
+
+    .calm-box p,
+    .calm-box li {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .calm-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
 
     footer {
       text-align: center;
-      padding: 25px 15px;
-      background: var(--purple-light);
-      margin-top: 40px;
+      padding: 8px 18px 34px;
+      color: var(--muted);
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        transition: none !important;
-        animation: none !important;
+    footer .footer-links {
+      margin-bottom: 10px;
+    }
+
+    footer .footer-links a {
+      margin: 0 6px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 920px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .timer-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .plant-panel {
+        margin-top: 8px;
       }
     }
 
-    /* Peaceful lavender and sage design */
-    body {
-      min-height: 100vh;
-      font-family: 'Segoe UI', sans-serif;
-      color: #51465f;
-      background:
-        radial-gradient(
-          circle at 12% 15%,
-          rgba(218, 207, 244, 0.75),
-          transparent 36%
-        ),
-        radial-gradient(
-          circle at 88% 80%,
-          rgba(207, 225, 211, 0.65),
-          transparent 35%
-        ),
-        linear-gradient(135deg, #faf8ff, #f3f0fa, #f7f8f1);
-    }
+    @media (max-width: 640px) {
+      .timer-panel,
+      .side-panel {
+        padding: 18px;
+      }
 
-    header,
-    footer {
-      background: transparent;
-    }
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
 
-    .timer-card {
-      background: rgba(255, 255, 255, 0.76);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      border-radius: 28px;
-      box-shadow: 0 18px 50px rgba(91, 73, 117, 0.09);
-    }
+      .mode-button,
+      .primary-btn,
+      .secondary-btn {
+        width: 100%;
+      }
 
-    .info-card {
-      background: rgba(255, 255, 255, 0.7);
-      border-color: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 10px 30px rgba(91, 73, 117, 0.05);
-    }
+      .controls {
+        flex-direction: column;
+      }
 
-    .sessions {
-      background: #f0edf6;
+      .plant-scene {
+        height: 260px;
+      }
     }
-
-    button {
-      border-radius: 14px;
-    }
- </style>
+  </style>
 </head>
 <body>
+  <header>
+    <div class="eyebrow">Quiet Digital Studio</div>
+    <h1>Focus Timer</h1>
+    <p class="subtitle">
+      A calm, elegant space to focus — and a growing plant to reflect the progress you make, one session at a time.
+    </p>
+    <a class="top-link" href="index.html">← Back to the Study Planner</a>
+  </header>
 
-<header>
-  <p>QUIET DIGITAL STUDIO</p>
-  <h1>Focus Timer</h1>
-  <p>A little focus, one session at a time.</p>
-  <p><a href="index.html">← Back to the Study Planner</a></p>
-</header>
-
-<main>
-  <section class="timer-card" aria-label="Study focus timer">
-    <div class="modes" aria-label="Choose timer mode">
-      <button class="mode-button active" id="focus-mode" aria-pressed="true">
-        Focus · 25 min
-      </button>
-      <button class="mode-button" id="break-mode" aria-pressed="false">
-        Short break · 5 min
-      </button>
-    </div>
-
-    <div class="timer-ring" id="timer-ring" role="img"
-         aria-label="Timer progress">
-      <div class="timer-inner">
-        <div id="time" role="timer" aria-label="25 minutes remaining">
-          25:00
-        </div>
-        <div id="mode-label">Ready to focus?</div>
+  <main>
+    <section class="card timer-panel">
+      <div class="modes" aria-label="Choose timer mode">
+        <button class="mode-button active" id="focus-mode" type="button">Focus · 25 min</button>
+        <button class="mode-button" id="short-break-mode" type="button">Short Break · 5 min</button>
+        <button class="mode-button" id="long-break-mode" type="button">Long Break · 15 min</button>
       </div>
+
+      <div class="current-task">
+        <label for="task-input">Today's focus</label>
+        <input id="task-input" type="text" placeholder="Example: Revise Sociology chapter 3" />
+      </div>
+
+      <div class="timer-layout">
+        <div class="timer-area">
+          <div class="timer-ring" id="timer-ring" role="img" aria-label="Timer progress">
+            <div class="timer-inner">
+              <div class="time" id="time" role="timer" aria-live="polite">25:00</div>
+              <div class="mode-label" id="mode-label">Ready to focus?</div>
+            </div>
+          </div>
+
+          <p class="message" id="message">Choose a mode and press Start when you're ready.</p>
+
+          <div class="controls">
+            <button class="primary-btn" id="start-pause" type="button">Start</button>
+            <button class="secondary-btn" id="reset" type="button">Reset</button>
+          </div>
+
+          <div class="stats-row">
+            <div class="mini-stat">
+              <div class="label">Sessions today</div>
+              <div class="value" id="session-count">0</div>
+            </div>
+            <div class="mini-stat">
+              <div class="label">Minutes focused</div>
+              <div class="value" id="minutes-focused">0</div>
+            </div>
+            <div class="mini-stat">
+              <div class="label">Plant stage</div>
+              <div class="value" id="plant-level">Seed</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="plant-panel">
+          <h2 class="plant-title">Growth Garden</h2>
+          <p class="plant-subtitle">Your plant grows as you complete focus sessions.</p>
+
+          <div class="plant-scene">
+            <div class="ground"></div>
+            <div class="pot"></div>
+            <div class="soil"></div>
+            <div class="stem" id="stem"></div>
+
+            <div class="leaf left" id="leaf1"></div>
+            <div class="leaf right" id="leaf2"></div>
+            <div class="leaf left" id="leaf3"></div>
+            <div class="leaf right" id="leaf4"></div>
+            <div class="leaf left" id="leaf5"></div>
+            <div class="leaf right" id="leaf6"></div>
+
+            <div class="flower" id="flower">
+              <div class="petal"></div>
+              <div class="petal"></div>
+              <div class="petal"></div>
+              <div class="petal"></div>
+              <div class="petal"></div>
+              <div class="flower-center"></div>
+            </div>
+          </div>
+
+          <div class="plant-stage-text" id="plant-stage-text">
+            Begin with one small step.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="card side-panel">
+      <h2 class="side-title">A quiet place to do meaningful work</h2>
+      <p class="side-text">
+        Use this timer to stay present, complete one task at a time, and let your little plant reflect the discipline you're building.
+      </p>
+
+      <div class="calm-box">
+        <h3>How it works</h3>
+        <ul>
+          <li>Choose a mode.</li>
+          <li>Write what you're focusing on.</li>
+          <li>Press Start.</li>
+          <li>Finish a focus session to grow your plant.</li>
+        </ul>
+      </div>
+
+      <div class="calm-box">
+        <h3>Growth stages</h3>
+        <ul>
+          <li><strong>0 sessions:</strong> Seed</li>
+          <li><strong>1–2 sessions:</strong> Sprout</li>
+          <li><strong>3–4 sessions:</strong> Young plant</li>
+          <li><strong>5–6 sessions:</strong> Growing strong</li>
+          <li><strong>7+ sessions:</strong> Blooming</li>
+        </ul>
+      </div>
+
+      <div class="calm-box">
+        <h3>Gentle reminder</h3>
+        <p>
+          Productivity is not about pressure. It is about showing up, focusing with intention, and letting progress grow naturally.
+        </p>
+      </div>
+
+      <div class="calm-box">
+        <h3>Useful pages</h3>
+        <p>
+          <a href="index.html">Home</a><br>
+          <a href="exam-study-guide.html">Exam Study Guide</a><br>
+          <a href="privacy.html">Privacy Policy</a>
+        </p>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="index.html">Home</a> ·
+      <a href="exam-study-guide.html">Exam Study Guide</a> ·
+      <a href="privacy.html">Privacy Policy</a>
     </div>
+    <div>Quiet Digital Studio</div>
+    <div>Contact: quietdigitstudio@gmail.com</div>
+  </footer>
 
-    <div class="controls">
-      <button class="primary" id="start-pause">Start focus</button>
-      <button class="secondary" id="reset">Reset</button>
-    </div>
+  <script>
+    (function () {
+      const MODES = {
+        focus: { label: "Focus session", seconds: 25 * 60 },
+        shortBreak: { label: "Short break", seconds: 5 * 60 },
+        longBreak: { label: "Long break", seconds: 15 * 60 }
+      };
 
-    <div class="sessions">
-      <div>Completed focus sessions</div>
-      <div id="session-count" aria-live="polite">0</div>
-      <div class="muted">Counted during this visit</div>
-    </div>
+      const timeEl = document.getElementById("time");
+      const modeLabelEl = document.getElementById("mode-label");
+      const messageEl = document.getElementById("message");
+      const startPauseBtn = document.getElementById("start-pause");
+      const resetBtn = document.getElementById("reset");
+      const timerRing = document.getElementById("timer-ring");
+      const sessionCountEl = document.getElementById("session-count");
+      const minutesFocusedEl = document.getElementById("minutes-focused");
+      const plantLevelEl = document.getElementById("plant-level");
+      const plantStageTextEl = document.getElementById("plant-stage-text");
+      const taskInput = document.getElementById("task-input");
 
-    <p id="message" role="status" aria-live="polite">
-      Choose a session and press Start when you're ready.
-    </p>
-  </section>
+      const focusBtn = document.getElementById("focus-mode");
+      const shortBreakBtn = document.getElementById("short-break-mode");
+      const longBreakBtn = document.getElementById("long-break-mode");
 
-  <section class="info-card">
-    <h2>How to use your focus timer</h2>
-    <ol>
-      <li>Choose a topic or task to work on.</li>
-      <li>Start a 25-minute focus session.</li>
-      <li>Keep distractions away and work on one task.</li>
-      <li>When the timer ends, take a short break.</li>
-      <li>Repeat when you feel ready.</li>
-    </ol>
-    <p class="muted">
-      These durations are a starting point. Adjust your study routine
-      to suit your needs, and take breaks whenever you need them.
-    </p>
-  </section>
-</main>
+      const stem = document.getElementById("stem");
+      const flower = document.getElementById("flower");
+      const leaves = [
+        document.getElementById("leaf1"),
+        document.getElementById("leaf2"),
+        document.getElementById("leaf3"),
+        document.getElementById("leaf4"),
+        document.getElementById("leaf5"),
+        document.getElementById("leaf6")
+      ];
 
-<footer>
-  <p><strong>Quiet Digital Studio</strong></p>
-  <p>
-    <a href="index.html">Home</a> ·
-    <a href="exam-study-guide.html">Exam Study Guide</a> ·
-    <a href="privacy.html">Privacy Policy</a>
-  </p>
-  <p class="muted">Contact: quietdigitstudio@gmail.com</p>
-</footer>
+      const STORAGE_KEY = "qds-focus-timer-data";
 
-<script>
-  (() => {
-    const FOCUS_SECONDS = 25 * 60;
-    const BREAK_SECONDS = 5 * 60;
+      let currentMode = "focus";
+      let remaining = MODES.focus.seconds;
+      let running = false;
+      let deadline = 0;
+      let intervalId = null;
 
-    const timeDisplay = document.getElementById("time");
-    const modeLabel = document.getElementById("mode-label");
-    const ring = document.getElementById("timer-ring");
-    const startPauseButton = document.getElementById("start-pause");
-    const resetButton = document.getElementById("reset");
-    const focusButton = document.getElementById("focus-mode");
-    const breakButton = document.getElementById("break-mode");
-    const sessionCountDisplay = document.getElementById("session-count");
-    const message = document.getElementById("message");
-
-    let mode = "focus";
-    let remaining = FOCUS_SECONDS;
-    let running = false;
-    let deadline = 0;
-    let intervalId = null;
-    let completedSessions = 0;
-
-    function duration() {
-      return mode === "focus" ? FOCUS_SECONDS : BREAK_SECONDS;
-    }
-
-    function formatTime(seconds) {
-      const mins = Math.floor(seconds / 60);
-      const secs = seconds % 60;
-      return String(mins).padStart(2, "0") + ":" +
-             String(secs).padStart(2, "0");
-    }
-
-    function render() {
-      timeDisplay.textContent = formatTime(remaining);
-      timeDisplay.setAttribute(
-        "aria-label",
-        formatTime(remaining) + " remaining"
-      );
-
-      const progress = 100 * (1 - remaining / duration());
-      ring.style.setProperty("--progress", progress + "%");
-      ring.setAttribute(
-        "aria-label",
-        Math.round(progress) + "% of this session completed"
-      );
-
-      modeLabel.textContent = mode === "focus"
-        ? (running ? "Stay focused" : "Focus session")
-        : (running ? "Enjoy your break" : "Short break");
-
-      focusButton.classList.toggle("active", mode === "focus");
-      breakButton.classList.toggle("active", mode === "break");
-      focusButton.setAttribute("aria-pressed", String(mode === "focus"));
-      breakButton.setAttribute("aria-pressed", String(mode === "break"));
-
-      startPauseButton.textContent = running
-        ? "Pause"
-        : (remaining === 0 ? "Start again" :
-           (remaining === duration() ? "Start " +
-             (mode === "focus" ? "focus" : "break") : "Resume"));
-    }
-
-    function stopInterval() {
-      if (intervalId !== null) {
-        clearInterval(intervalId);
-        intervalId = null;
+      function getTodayDateString() {
+        const today = new Date();
+        return today.getFullYear() + "-" +
+          String(today.getMonth() + 1).padStart(2, "0") + "-" +
+          String(today.getDate()).padStart(2, "0");
       }
-    }
 
-    function tick() {
-      remaining = Math.max(
-        0,
-        Math.ceil((deadline - Date.now()) / 1000)
-      );
+      function getDefaultData() {
+        return {
+          date: getTodayDateString(),
+          sessionsToday: 0,
+          minutesFocusedToday: 0,
+          task: ""
+        };
+      }
 
-      if (remaining === 0) {
+      function loadData() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (!saved || typeof saved !== "object") return getDefaultData();
+
+          if (saved.date !== getTodayDateString()) {
+            return {
+              date: getTodayDateString(),
+              sessionsToday: 0,
+              minutesFocusedToday: 0,
+              task: saved.task || ""
+            };
+          }
+
+          return {
+            date: saved.date || getTodayDateString(),
+            sessionsToday: Number(saved.sessionsToday) || 0,
+            minutesFocusedToday: Number(saved.minutesFocusedToday) || 0,
+            task: saved.task || ""
+          };
+        } catch (error) {
+          return getDefaultData();
+        }
+      }
+
+      let appData = loadData();
+
+      function saveData() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+      }
+
+      function formatTime(totalSeconds) {
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
+      }
+
+      function getCurrentDuration() {
+        return MODES[currentMode].seconds;
+      }
+
+      function updateModeButtons() {
+        focusBtn.classList.toggle("active", currentMode === "focus");
+        shortBreakBtn.classList.toggle("active", currentMode === "shortBreak");
+        longBreakBtn.classList.toggle("active", currentMode === "longBreak");
+      }
+
+      function getPlantStage(sessions) {
+        if (sessions <= 0) {
+          return {
+            level: "Seed",
+            text: "Begin with one small step.",
+            stemHeight: 18,
+            leavesVisible: 0,
+            flowerVisible: false
+          };
+        }
+        if (sessions <= 2) {
+          return {
+            level: "Sprout",
+            text: "Your effort is beginning to grow.",
+            stemHeight: 70,
+            leavesVisible: 2,
+            flowerVisible: false
+          };
+        }
+        if (sessions <= 4) {
+          return {
+            level: "Young plant",
+            text: "You're building steady momentum.",
+            stemHeight: 112,
+            leavesVisible: 4,
+            flowerVisible: false
+          };
+        }
+        if (sessions <= 6) {
+          return {
+            level: "Growing strong",
+            text: "Your discipline is taking root beautifully.",
+            stemHeight: 148,
+            leavesVisible: 6,
+            flowerVisible: false
+          };
+        }
+        return {
+          level: "Blooming",
+          text: "You're blooming through consistent work.",
+          stemHeight: 178,
+          leavesVisible: 6,
+          flowerVisible: true
+        };
+      }
+
+      function renderPlant() {
+        const stage = getPlantStage(appData.sessionsToday);
+
+        plantLevelEl.textContent = stage.level;
+        plantStageTextEl.textContent = stage.text;
+
+        stem.style.height = stage.stemHeight + "px";
+        stem.style.left = "50%";
+        stem.style.transform = "translateX(-50%)";
+
+        const baseBottom = 130;
+        const leafPositions = [
+          { bottom: baseBottom + 20, left: "calc(50% - 34px)" },
+          { bottom: baseBottom + 36, left: "calc(50% + 2px)" },
+          { bottom: baseBottom + 60, left: "calc(50% - 38px)" },
+          { bottom: baseBottom + 78, left: "calc(50% + 4px)" },
+          { bottom: baseBottom + 104, left: "calc(50% - 40px)" },
+          { bottom: baseBottom + 126, left: "calc(50% + 5px)" }
+        ];
+
+        leaves.forEach(function (leaf, index) {
+          const position = leafPositions[index];
+          leaf.style.bottom = position.bottom + "px";
+          leaf.style.left = position.left;
+          if (index < stage.leavesVisible) {
+            leaf.style.opacity = "1";
+          } else {
+            leaf.style.opacity = "0";
+          }
+        });
+
+        flower.style.left = "calc(50% - 26px)";
+        flower.style.bottom = (baseBottom + stage.stemHeight + 18) + "px";
+        flower.style.opacity = stage.flowerVisible ? "1" : "0";
+        flower.style.transform = stage.flowerVisible ? "scale(1)" : "scale(0.8)";
+      }
+
+      function updateStats() {
+        sessionCountEl.textContent = String(appData.sessionsToday);
+        minutesFocusedEl.textContent = String(appData.minutesFocusedToday);
+        renderPlant();
+      }
+
+      function renderTimer() {
+        timeEl.textContent = formatTime(remaining);
+        timeEl.setAttribute("aria-label", formatTime(remaining) + " remaining");
+
+        const duration = getCurrentDuration();
+        const progress = 100 * (1 - remaining / duration);
+        timerRing.style.setProperty("--progress", progress + "%");
+
+        modeLabelEl.textContent = running ? MODES[currentMode].label + " in progress" : MODES[currentMode].label;
+
+        updateModeButtons();
+
+        if (running) {
+          startPauseBtn.textContent = "Pause";
+        } else if (remaining !== duration) {
+          startPauseBtn.textContent = "Resume";
+        } else {
+          startPauseBtn.textContent = "Start";
+        }
+      }
+
+      function chooseMode(mode) {
+        currentMode = mode;
+        remaining = MODES[currentMode].seconds;
         running = false;
-        stopInterval();
+        clearTimerInterval();
+        renderTimer();
 
         if (mode === "focus") {
-          completedSessions++;
-          sessionCountDisplay.textContent = completedSessions;
-          message.textContent =
-            "Focus session complete! Take a break if you need one.";
+          messageEl.textContent = "Ready to focus with intention.";
+        } else if (mode === "shortBreak") {
+          messageEl.textContent = "Take a small gentle break.";
         } else {
-          message.textContent =
-            "Break complete! Start another focus session when you're ready.";
+          messageEl.textContent = "Take a deeper rest before returning.";
+        }
+      }
+
+      function clearTimerInterval() {
+        if (intervalId !== null) {
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+      }
+
+      function startTimer() {
+        if (running) return;
+
+        running = true;
+        deadline = Date.now() + remaining * 1000;
+        messageEl.textContent = currentMode === "focus"
+          ? "Your focus session is running."
+          : "Your break is running.";
+        renderTimer();
+
+        intervalId = setInterval(function () {
+          remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+
+          if (remaining <= 0) {
+            remaining = 0;
+            running = false;
+            clearTimerInterval();
+            handleSessionComplete();
+          }
+
+          renderTimer();
+        }, 250);
+      }
+
+      function pauseTimer() {
+        if (!running) return;
+
+        remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+        running = false;
+        clearTimerInterval();
+        messageEl.textContent = "Timer paused. Continue whenever you're ready.";
+        renderTimer();
+      }
+
+      function resetTimer() {
+        running = false;
+        clearTimerInterval();
+        remaining = getCurrentDuration();
+        messageEl.textContent = "Timer reset.";
+        renderTimer();
+      }
+
+      function handleSessionComplete() {
+        if (currentMode === "focus") {
+          appData.sessionsToday += 1;
+          appData.minutesFocusedToday += 25;
+          saveData();
+          updateStats();
+          messageEl.textContent = "Focus session complete. Your plant has grown 🌱";
+        } else {
+          messageEl.textContent = "Break complete. Return when you're ready.";
         }
 
-        render();
-        return;
+        renderTimer();
       }
 
-      render();
-    }
+      focusBtn.addEventListener("click", function () {
+        chooseMode("focus");
+      });
 
-    function start() {
-      if (running) return;
+      shortBreakBtn.addEventListener("click", function () {
+        chooseMode("shortBreak");
+      });
 
-      if (remaining === 0) {
-        remaining = duration();
-      }
+      longBreakBtn.addEventListener("click", function () {
+        chooseMode("longBreak");
+      });
 
-      running = true;
-      deadline = Date.now() + remaining * 1000;
-      message.textContent = mode === "focus"
-        ? "Your focus session is running."
-        : "Your break is running.";
+      startPauseBtn.addEventListener("click", function () {
+        if (running) {
+          pauseTimer();
+        } else {
+          startTimer();
+        }
+      });
 
-      stopInterval();
-      intervalId = setInterval(tick, 250);
-      render();
-    }
+      resetBtn.addEventListener("click", function () {
+        resetTimer();
+      });
 
-    function pause() {
-      if (!running) return;
+      taskInput.addEventListener("input", function () {
+        appData.task = taskInput.value;
+        saveData();
+      });
 
-      remaining = Math.max(
-        0,
-        Math.ceil((deadline - Date.now()) / 1000)
-      );
-      running = false;
-      stopInterval();
-      message.textContent = "Timer paused. Resume whenever you're ready.";
-      render();
-    }
-
-    function reset() {
-      running = false;
-      stopInterval();
-      remaining = duration();
-      message.textContent = "Timer reset. Start whenever you're ready.";
-      render();
-    }
-
-    function chooseMode(newMode) {
-      running = false;
-      stopInterval();
-      mode = newMode;
-      remaining = duration();
-      message.textContent = mode === "focus"
-        ? "Ready for a focus session?"
-        : "Ready for a short break?";
-      render();
-    }
-
-    startPauseButton.addEventListener("click", () => {
-      if (running) pause();
-      else start();
-    });
-
-    resetButton.addEventListener("click", reset);
-    focusButton.addEventListener("click", () => chooseMode("focus"));
-    breakButton.addEventListener("click", () => chooseMode("break"));
-
-    render();
-  })();
-</script>
-
+      taskInput.value = appData.task || "";
+      updateStats();
+      renderTimer();
+    })();
+  </script>
 </body>
-</html> 
+</html>
