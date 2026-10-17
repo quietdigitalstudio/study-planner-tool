@@ -62,6 +62,26 @@
     .note { color: #657087; font-size: 14px; }
     footer { text-align: center; padding: 24px; color: #657087; }
     a { color: #465db5; }
+/* Soft navigation animations */
+.qds-shell .qds-links a {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (hover: hover) {
+  .qds-shell .qds-links a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(127, 105, 155, 0.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qds-shell .qds-links a {
+    transition: none;
+  }
+  .qds-shell .qds-links a:hover {
+    transform: none;
+  }
+}
   </style>
 <style>
 /* Shared Quiet Digital Studio navigation */
